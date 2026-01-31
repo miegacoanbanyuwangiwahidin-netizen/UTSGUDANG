@@ -4,74 +4,98 @@
   <meta charset="UTF-8">
   <title>UTS Gudang</title>
 
+  <!-- WAJIB untuk mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <!-- BOOTSTRAP -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
 
-<div class="container mt-5">
-  <div class="card shadow p-4">
+<div class="container-fluid">
+  <div class="row justify-content-center">
 
-    <h3 class="text-center mb-4">Form Input Data UTS Gudang</h3>
+    <!-- Lebar menyesuaikan device -->
+    <div class="col-12 col-sm-10 col-md-6 col-lg-4">
 
-    <form id="form">
+      <div class="card shadow-sm p-4 mt-4 mb-4">
 
-      <input 
-        name="nama"
-        class="form-control mb-3"
-        placeholder="Nama PIC"
-        required
-      >
+        <h4 class="text-center mb-4">
+          Form Input Data<br>UTS Gudang
+        </h4>
 
-      <input 
-        type="date"
-        name="tanggal"
-        class="form-control mb-3"
-        required
-      >
+        <form id="form">
 
-      <!-- KATEGORI -->
-      <select name="kategori" class="form-select mb-3" required>
-        <option value="">-- Pilih Kategori --</option>
-        <option value="BARANG MASUK">BARANG MASUK</option>
-        <option value="BARANG KELUAR">BARANG KELUAR</option>
-      </select>
+          <div class="mb-3">
+            <label class="form-label">Nama PIC</label>
+            <input 
+              name="nama"
+              class="form-control"
+              placeholder="Masukkan nama"
+              required
+            >
+          </div>
 
-      <!-- JENIS -->
-      <select name="jenis" class="form-select mb-3" required>
-        <option value="">-- Pilih Jenis --</option>
-        <option>KLAKAT PREMIUM</option>
-        <option>NAMPAN KAYU KOTAK</option>
-        <option>NAMPAN KOTAK LICIN</option>
-        <option>PISAU GILING DAGING MWH 80</option>
-        <option>BASKET/SARINGAN BOILER</option>
-        <option>GARPU ADUKAN MIE</option>
-        <option>SPATULA STAINLESS</option>
-        <option>SPATULA MIE IBLIS</option>
-        <option>PANCI MIE</option>
-        <option>GELAS TAKAR 500 ML</option>
-        <option>GELAS MINUMAN HANGAT</option>
-        <option>GELAS TEA</option>
-      </select>
+          <div class="mb-3">
+            <label class="form-label">Tanggal</label>
+            <input 
+              type="date"
+              name="tanggal"
+              class="form-control"
+              required
+            >
+          </div>
 
-      <!-- JUMLAH -->
-      <input 
-        type="number"
-        name="jumlah"
-        class="form-control mb-3"
-        placeholder="Jumlah Barang"
-        min="1"
-        required
-      >
+          <div class="mb-3">
+            <label class="form-label">Kategori</label>
+            <select name="kategori" class="form-select" required>
+              <option value="">-- Pilih Kategori --</option>
+              <option value="BARANG MASUK">BARANG MASUK</option>
+              <option value="BARANG KELUAR">BARANG KELUAR</option>
+            </select>
+          </div>
 
-      <button type="submit" class="btn btn-primary w-100">
-        Simpan Data
-      </button>
-    </form>
+          <div class="mb-3">
+            <label class="form-label">Jenis Barang</label>
+            <select name="jenis" class="form-select" required>
+              <option value="">-- Pilih Jenis --</option>
+              <option>KLAKAT PREMIUM</option>
+              <option>NAMPAN KAYU KOTAK</option>
+              <option>NAMPAN KOTAK LICIN</option>
+              <option>PISAU GILING DAGING MWH 80</option>
+              <option>BASKET/SARINGAN BOILER</option>
+              <option>GARPU ADUKAN MIE</option>
+              <option>SPATULA STAINLESS</option>
+              <option>SPATULA MIE IBLIS</option>
+              <option>PANCI MIE</option>
+              <option>GELAS TAKAR 500 ML</option>
+              <option>GELAS MINUMAN HANGAT</option>
+              <option>GELAS TEA</option>
+            </select>
+          </div>
 
-    <div id="status" class="text-center mt-3 fw-bold"></div>
+          <div class="mb-4">
+            <label class="form-label">Jumlah</label>
+            <input 
+              type="number"
+              name="jumlah"
+              class="form-control"
+              placeholder="Jumlah barang"
+              min="1"
+              required
+            >
+          </div>
 
+          <button type="submit" class="btn btn-primary w-100">
+            Simpan Data
+          </button>
+        </form>
+
+        <div id="status" class="text-center mt-3 fw-semibold"></div>
+
+      </div>
+    </div>
   </div>
 </div>
 
@@ -83,7 +107,7 @@ document.getElementById("form").addEventListener("submit", async e => {
 
   const status = document.getElementById("status");
   status.innerText = "Menyimpan...";
-  status.className = "text-primary text-center mt-3 fw-bold";
+  status.className = "text-primary text-center mt-3 fw-semibold";
 
   try {
     const res = await fetch(URL, {
@@ -95,16 +119,14 @@ document.getElementById("form").addEventListener("submit", async e => {
 
     status.innerText = data.message;
     status.className = data.success
-      ? "text-success text-center mt-3 fw-bold"
-      : "text-danger text-center mt-3 fw-bold";
+      ? "text-success text-center mt-3 fw-semibold"
+      : "text-danger text-center mt-3 fw-semibold";
 
-    if (data.success) {
-      e.target.reset();
-    }
+    if (data.success) e.target.reset();
 
   } catch (err) {
     status.innerText = "Gagal terhubung ke server";
-    status.className = "text-danger text-center mt-3 fw-bold";
+    status.className = "text-danger text-center mt-3 fw-semibold";
   }
 
   setTimeout(() => status.innerText = "", 5000);
